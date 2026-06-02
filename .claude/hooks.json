@@ -1,0 +1,20 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "tool": "Write",
+      "filter": "reports/",
+      "command": "echo \"[$(date '+%H:%M:%S')] Report saved: $FILE\" >> .claude/activity.log"
+    },
+    {
+      "event": "PreToolUse",
+      "tool": "WebFetch",
+      "command": "echo \"[$(date '+%H:%M:%S')] Fetching: $URL\" >> .claude/activity.log"
+    },
+    {
+      "event": "PostToolUse",
+      "tool": "WebFetch",
+      "command": "echo \"[$(date '+%H:%M:%S')] Done fetching: $URL\" >> .claude/activity.log"
+    }
+  ]
+}
