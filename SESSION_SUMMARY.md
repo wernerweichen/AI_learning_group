@@ -5,6 +5,46 @@
 
 ---
 
+## Session 數據
+
+### 時間
+| 事件 | 時間 (UTC+0) |
+|------|-------------|
+| 第一個 commit（init） | 2026-06-02 07:52:01 |
+| 修復 base path（fix） | 2026-06-02 08:04:54 |
+| 建立 AI 新聞工具（feat） | 2026-06-02 08:31:47 |
+| 建立 Session Summary（docs） | 2026-06-02 23:16:08 |
+
+**主要開發時間**：約 **40 分鐘**（07:52 → 08:31，init → feat）  
+**總 session 長度**：約 **15 小時 24 分鐘**（含最後寫摘要的空閒時間）
+
+### Token 使用量
+> Token 計數無法在 session 內部直接讀取。精確數字請至 **Anthropic Console → Usage** 查詢。
+
+根據本次內容估算（僅供參考）：
+
+| 類型 | 估算說明 |
+|------|----------|
+| Input tokens | 大量工具回傳（831 行 JSX、MCP workflow 結果 55KB+、多次 git/build 輸出） |
+| Output tokens | 6 個檔案生成（CLAUDE.md、SKILL.md、sources.md、hooks.json、.mcp.json、本摘要） |
+| 消耗較多的原因 | GitHub MCP 的 workflow runs 回傳原始 JSON，單次超過 55KB |
+
+---
+
+## 使用者需要親自決策的事項
+
+本次 session 中，有以下事項 Claude 無法代勞，需要使用者手動操作：
+
+| # | 決策 / 操作 | 發生時機 | 說明 |
+|---|-------------|----------|------|
+| 1 | **將 `claude/session-OuyZ6` merge 到 `main`** | Step 2 部署後 | GitHub Actions 的部署 workflow 只在 push to `main` 時觸發，需要使用者自行在 GitHub 上 merge |
+| 2 | **在 GitHub 設定 Pages source** | 第一次部署後 | Settings → Pages → Deploy from branch → `gh-pages` / `/(root)` → Save |
+| 3 | **Chrome 強制重整（Ctrl+Shift+R）** | Step 3 修復後 | 瀏覽器快取了舊的空白頁面，需要清除快取才能看到修復結果 |
+| 4 | **取得並填入 Brave Search API Key** | 使用 `/ai-news` 前 | `.mcp.json` 中有佔位符 `YOUR_BRAVE_API_KEY_HERE`，需至 [brave.com/search/api](https://brave.com/search/api/) 申請並替換 |
+| 5 | **本機執行 `claude mcp add`** | 使用 AI 新聞工具前 | MCP server 設定需在每台電腦的本機 Claude CLI 環境中執行一次，`.mcp.json` 只是記錄設定，不會自動安裝 |
+
+---
+
 ## 概覽
 
 本次 session 完成了兩件事：
